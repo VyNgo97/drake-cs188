@@ -1,18 +1,23 @@
 {
   "name": "drake-cs188",
   "version": "1.0.0",
-  "description": "",
+  "description": "Welcome to class! We are going to try a little bit of an experiment and see if we can use a GitHub project to organize and participate in this class. This is going to be so much fun!",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node index.js next start",
     "test": "jest test --coverage",
     "acceptance": "jest acceptance",
     "lint": "eslint . --ext .json --ext .js",
-    "verify": "yarn lint && yarn test"
+    "verify": "yarn lint && yarn test",
+    "dev": "next",
+    "build": "next build"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "next": "^9.3.5",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "uuid": "^3.4.0"
   },
   "devDependencies": {
@@ -25,7 +30,7 @@
     "jest-when": "^2.7.0"
   },
   "jest": {
-    "coverageThreshold":{
+    "coverageThreshold": {
       "global": {
         "branches": 100,
         "functions": 100,
@@ -33,5 +38,17 @@
         "statements": 100
       }
     }
-  } 
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VyNgo97/drake-cs188.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/VyNgo97/drake-cs188/issues"
+  },
+  "homepage": "https://github.com/VyNgo97/drake-cs188#readme"
 }
