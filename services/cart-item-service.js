@@ -1,36 +1,22 @@
-const {
-    selectCartItems,
-    selectCartItemsByCartItemId,
-    selectCartItemsByCartId
-} = require('../repositories/cart-items-repository');
+import fetch from 'isomorphic-fetch';
 
-const mapToModel = (cartItem) => ({
-    cartId: cartItem['cart_id'],
-    cartItemId: cartItem['cart_item_id'],
-    itemId: cartItem['item_id'],
-    quantity: cartItem['quantity']
-});
+export const getCustomersCart = async () => {
+	const customerResponse = await fetch('http://localhost:5555/customers');
+	const [customer] = await customerResponse.json();
 
-const getAllCartItems = () => {
-    const {rows} = selectCartItems();
+	const cartResponse = await fetch('http://localhost:5555/customers/${customer.customerId}/carts');
+	const [cart] = await cartResponse.json();
 
-    return rows.map(mapToModel);
-};
+	const cartItemResponse = await fetch('http://localhost:5555/carts/${cart.cartId}/cart-items');
+	const cartItem = await cartItemResponse.json();
 
-const getCartItemByCartItemId = (cartItemId) => {
-    const cart = selectCartItemsByCartItemId(cartItemId);
+	const itemsToFetch = cartItems.map((cartItem) => fetch(`http:localhost:5555/items/${cartItem.itemId}`));
+	const itemResponses = await Promise.all(itemsToFetch);
+	const items = await Promise.all(itemResponses.map((itemResponse) => itemResponse.json()));
 
-    return mapToModel(cart);
-};
-
-const getCartItemsByCartId = (cartId) => {
-    const {rows} = selectCartItemsByCartId(cartId);
-
-    return rows.map(mapToModel);
-};
-
-module.exports = {
-    getAllCartItems,
-    getCartItemByCartItemId,
-    getCartItemsByCartId
-};
+	return {
+			customer,
+			cartItems,
+			items
+	};
+} 
